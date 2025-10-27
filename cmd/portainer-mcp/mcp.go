@@ -66,7 +66,7 @@ func main() {
 	}
 
   // Minimal tools for swarm-only operations
-  // server.AddEnvironmentFeatures()        // Not needed for basic stack ops
+  server.AddEnvironmentFeatures()        // NEEDED to discover env ID
   // server.AddEnvironmentGroupFeatures()   // Not needed for basic stack ops
   // server.AddTagFeatures()                // Not needed for basic stack ops
   server.AddStackFeatures()                 // CORE: Stack management (list, get, update)
