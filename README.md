@@ -1,10 +1,67 @@
-# Portainer MCP
-[![Go Report Card](https://goreportcard.com/badge/github.com/portainer/portainer-mcp)](https://goreportcard.com/report/github.com/portainer/portainer-mcp)
-![coverage](https://raw.githubusercontent.com/portainer/portainer-mcp/badges/.badges/main/coverage.svg)
+# Portainer MCP (Docker Swarm Optimized Fork)
+
+> **This is an optimized fork of [portainer/portainer-mcp](https://github.com/portainer/portainer-mcp)** for Docker Swarm single-admin environments with 76% token reduction.
 
 Ever wished you could just ask Portainer what's going on?
 
-Now you can! Portainer MCP connects your AI assistant directly to your Portainer environments. Manage Portainer resources such as users and environments, or dive deeper by executing any Docker or Kubernetes command directly through the AI.
+Now you can! This fork connects your AI assistant directly to your Docker Swarm Portainer environments with dramatically reduced token usage.
+
+![portainer-mcp-demo](https://downloads.portainer.io/mcp-demo5.gif)
+
+---
+
+## 🔥 Why This Fork?
+
+The official Portainer MCP includes **37 tools** covering enterprise features:
+- Kubernetes operations
+- Multi-tenant access controls
+- Team management
+- Edge computing features
+
+For **single-admin Docker Swarm homelabs**, 76% of these tools are **unused**, causing massive token bloat in LLM conversations.
+
+## 🎯 Key Differences
+
+### 1. Regular Docker Stacks Support ✅ (Upstream PR Submitted)
+
+**Problem**: Official `listStacks` fails with 503 when edge features are disabled.
+
+**Solution**: Added support for regular Docker stacks via `/api/stacks` API with fallback to edge stacks.
+
+- ✅ Works with standard Docker Swarm
+- ✅ No edge features required
+- ✅ Backward compatible
+
+**Status**: [Pull Request #38](https://github.com/portainer/portainer-mcp/pull/38) submitted upstream
+
+### 2. Minimal Tool Set ⚡ (This Fork Only - 76% Reduction)
+
+**Reduced from 37 tools → 9 tools**
+
+#### ❌ Removed (28 tools):
+- All Kubernetes tools (3) - Not using K8s
+- All Access Group tools (7) - Single admin
+- All Team management (4) - No teams
+- All User management (2) - Single user
+- All Environment Group tools (5) - Edge-related
+- Environment access control (2) - Not needed
+- Other misc tools (5)
+
+#### ✅ Kept (9 essential tools):
+| Category | Tools | Use Cases |
+|----------|-------|-----------|
+| **Stacks** | list, get, create, update | Stack management & GitOps |
+| **Environment** | list, updateTags | Node visibility & organization |
+| **Tags** | list | Stack categorization |
+| **Settings** | get | Configuration checks |
+| **Docker Proxy** | dockerProxy | Restart containers, check logs, inspect resources |
+
+## 📊 Benefits
+
+- **76% less token usage** → Faster responses, lower costs
+- **Faster MCP startup** → Fewer tools to register
+- **Clearer tool list** → Only relevant operations
+- **Works with standard Docker Swarm** → No edge required
 
 ![portainer-mcp-demo](https://downloads.portainer.io/mcp-demo5.gif)
 
@@ -250,6 +307,26 @@ The following table lists the currently (latest version) supported operations th
 | **Kubernetes** | | | |
 | | KubernetesProxy | Proxy ANY Kubernetes API requests | 0.3.0 |
 | | getKubernetesResourceStripped | Proxy GET Kubernetes API requests and automatically strip verbose metadata fields | 0.6.0 |
+
+# Which Branch Should I Use?
+
+- **`main`** - Regular stacks fix only (37 tools, compatible with upstream)
+- **`minimal-tools-swarm-only`** - Recommended for Docker Swarm single-admin (9 tools, 76% reduction)
+- **`fix/regular-stacks-support`** - PR branch for upstream contribution
+
+## Use Cases
+
+**This fork is ideal for:**
+- ✅ Single-admin Docker Swarm homelabs
+- ✅ LLM-based infrastructure automation
+- ✅ Token-constrained MCP workflows
+- ✅ Standard Docker Swarm (no edge features)
+
+**Not suitable for:**
+- ❌ Multi-tenant Portainer environments
+- ❌ Kubernetes clusters
+- ❌ Edge computing deployments
+- ❌ Team-based access controls
 
 # Development
 
