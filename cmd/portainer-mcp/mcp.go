@@ -65,16 +65,17 @@ func main() {
 		log.Fatal().Err(err).Msg("failed to create server")
 	}
 
-	server.AddEnvironmentFeatures()
-	server.AddEnvironmentGroupFeatures()
-	server.AddTagFeatures()
-	server.AddStackFeatures()
-	server.AddSettingsFeatures()
-	server.AddUserFeatures()
-	server.AddTeamFeatures()
-	server.AddAccessGroupFeatures()
-	server.AddDockerProxyFeatures()
-	server.AddKubernetesProxyFeatures()
+  // Minimal tools for swarm-only operations
+  // server.AddEnvironmentFeatures()        // Not needed for basic stack ops
+  // server.AddEnvironmentGroupFeatures()   // Not needed for basic stack ops
+  // server.AddTagFeatures()                // Not needed for basic stack ops
+  server.AddStackFeatures()                 // CORE: Stack management (list, get, update)
+  server.AddSettingsFeatures()              // Read-only settings info
+  // server.AddUserFeatures()               // Not needed for basic stack ops
+  // server.AddTeamFeatures()               // Not needed for basic stack ops
+  // server.AddAccessGroupFeatures()        // Not needed for basic stack ops
+  server.AddDockerProxyFeatures()           // CORE: Docker API proxy
+  // server.AddKubernetesProxyFeatures()    // Not using k8s
 
 	err = server.Start()
 	if err != nil {

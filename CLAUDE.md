@@ -1,5 +1,24 @@
 # Portainer MCP Development Guide
 
+## Infrastructure Operations vs MCP Development
+
+**IMPORTANT: Understand the distinction:**
+
+- **MCP Development** (this project): Writing Go code to build the Portainer MCP server
+  - Use standard development workflow
+  - Follow Go best practices
+  - Write tests and documentation
+
+- **Infrastructure Operations**: Using Portainer to manage Docker/K8s infrastructure
+  - Use @homelab-infrastructure-manager agent
+  - For deploying stacks, restarting services, managing containers
+  - For VM operations, SSH commands, Proxmox management
+
+**When working on THIS project:**
+- You're developing the MCP server code (Go)
+- Focus on API client, handlers, tests
+- Infrastructure ops are handled by homelab-infrastructure-manager agent
+
 ## Build, Test & Run Commands
 - Build: `make build`
 - Run tests: `go test -v ./...`
